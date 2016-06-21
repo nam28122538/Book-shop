@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     MyAlert myAlert = new MyAlert();
-                    myAlert.myDialog(context,"Password False","Please Tey Password False");
+                    myAlert.myDialog(context,"Password False","Please Tey Password False Thank You");
 
                 }
 
