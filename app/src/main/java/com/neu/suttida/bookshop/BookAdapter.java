@@ -54,7 +54,7 @@ public class BookAdapter extends BaseAdapter{
         nameTextView.setText(nameString[i]);
 
         TextView priceTextView = (TextView)view1.findViewById(R.id.textView8);
-        nameTextView.setText(nameString[i]);
+        nameTextView.setText(priceStrings[i]);
 
 
 
