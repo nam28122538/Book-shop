@@ -2,6 +2,7 @@ package com.neu.suttida.bookshop;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.DateFormat;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         private String urLString;
         private boolean statusABoolean = true;
         private String truePasswordString;
+        private String nameLogInString;
 
 
         public MySynchronize(Context context, String urLString) {
@@ -84,9 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     if (userString.equals(jsonObject.getString("User"))) {
                         statusABoolean = false;
                         truePasswordString = jsonObject.getString("Password");
-
-
-
+                        nameLogInString = jsonObject.getString("Name");
 
                     }//if
 
@@ -98,8 +98,12 @@ public class MainActivity extends AppCompatActivity {
                     myAlert.myDialog(context,"ไม่มี User นี้", "ไม่มี " + userString + " ไม่มีในฐานข้อมูลของเรา");
                 } else if (passwoetString.equals(truePasswordString)) {
                     //Password
-                    Toast.makeText(context, "Welcome User",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context,BookActivity.class);
+                    intent.putExtra("Name",nameLogInString);
+                    startActivity(intent);
 
+                    Toast.makeText(context, "Welcome User "+userString,Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     MyAlert myAlert = new MyAlert();
                     myAlert.myDialog(context,"Password False","Please Tey Password False Thank You");
