@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     //Explicit
@@ -37,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         private Context context;
         private String urLString;
+        private boolean statusABoolean = true;
+        private String truePasswordString;
+
 
         public MySynchronize(Context context, String urLString) {
             this.context = context;
@@ -66,6 +73,42 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d("BookShopV1","JSON ==> "+ s);
+
+            try {
+
+                JSONArray jsonArray = new JSONArray(s);
+                for (int i=0;i<jsonArray.length();i++) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    if (userString.equals(jsonObject.getString("User"))) {
+                        statusABoolean = false;
+                        truePasswordString = jsonObject.getString("Password");
+
+
+
+
+                    }//if
+
+                }//for
+
+                //checkUser
+                if (statusABoolean) {
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context,"ไม่มี User นี้", "ไม่มี " + userString + " ไม่มีในฐานข้อมูลของเรา");
+                } else if (passwoetString.equals(truePasswordString)) {
+                    //Password
+                    Toast.makeText(context, "Welcome User",Toast.LENGTH_SHORT).show();
+
+                } else {
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context,"Password False","Please Tey Password False");
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         } //onPost
     } //Class
